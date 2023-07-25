@@ -27,137 +27,20 @@ while (command != "exit")
     else if (command == "testclean")
     {
         String testString = "Bob o’Bob";
-        String cleanString = testString.ToLower();
-        char[] testArray = testString.ToCharArray();
-        StringBuilder builder = new StringBuilder();
-
-        foreach (char testChar in testArray)
-        {
-            if (char.IsLetterOrDigit(testChar))
-            {
-                builder.Append(testChar);
-            }
-        }
-        cleanString = builder.ToString();
-
+        String cleanString = StringHelper.CleanString(testString);
         Console.WriteLine("Input: " + testString + ", Output: " + cleanString);
+    }
+    else if (command == "testreverse")
+    {
+        String testString = "reversethisstring";
+        String reverseString = StringHelper.ReverseString(testString);
+        Console.WriteLine("Input: " + testString + ", Output: " + reverseString);
     }
     else if (command == "testpalindrome")
     {
-        String testString = "bob";
-        char[] testArray = testString.ToCharArray();
-        Array.Reverse(testArray);
-        String reverseString = new String(testArray);
-
-        bool isPalindrome = false;
-        if (testString == reverseString)
-        {
-            isPalindrome = true;
-        }
-
-        Console.WriteLine("Input: " + testString + ", Output: " + reverseString + ", Palindrome: " + isPalindrome);
-    }
-    else if (command == "testfilter")
-    {
-        List<Marble> marbleList = new List<Marble>()
-        {
-            new Marble() {Id = 1, Color = "blue", Weight = 0.5, Name = "bob"},
-            new Marble() {Id = 2, Color = "red", Weight = 0.4, Name = "fred"},
-            new Marble() {Id = 3, Color = "violet", Weight = 0.6, Name = "sam"}
-        };
-
-        Console.WriteLine("Original List:");
-        foreach (Marble marble in marbleList)
-        {
-            Console.WriteLine(marble);
-        }
-        Console.WriteLine();
-
-        List<Marble> filteredList = new List<Marble>();
-
-        foreach (Marble marble in marbleList)
-        {
-            // Copied this from test clean
-            String cleanString = marble.Name.ToLower(); // marble name cleaned
-            char[] testArray = cleanString.ToCharArray();
-            StringBuilder builder = new StringBuilder();
-
-            foreach (char testChar in testArray)
-            {
-                if (char.IsLetterOrDigit(testChar))
-                {
-                    builder.Append(testChar);
-                }
-            }
-            cleanString = builder.ToString();
-
-            // Copied from test palindrome
-            testArray = cleanString.ToCharArray();
-            Array.Reverse(testArray);
-            String reverseString = new String(testArray); // marble name reversed
-
-            bool isPalindrome = false;
-            if (cleanString == reverseString)
-            {
-                isPalindrome = true;
-            }
-
-            // Added to the filter test
-            if (marble.Weight >= 0.5 && isPalindrome == true)
-            {
-                filteredList.Add(marble);
-            }
-        }
-
-        Console.WriteLine("Filtered List:");
-        foreach (Marble marble in filteredList)
-        {
-            Console.WriteLine(marble);
-        }
-        Console.WriteLine();
-    }
-    else if (command == "testsort")
-    {
-        List<Marble> marbleList = new List<Marble>()
-        {
-            // ROYGBIV
-            // BRVIOYG
-            new Marble() {Id = 1, Color = "blue", Weight = 0.5, Name = "bob"},
-            new Marble() {Id = 2, Color = "red", Weight = 0.4, Name = "fred"},
-            new Marble() {Id = 3, Color = "violet", Weight = 0.6, Name = "sam"},
-            new Marble() {Id = 4, Color = "indigo", Weight = 0.7, Name = "racecar"},
-            new Marble() {Id = 5, Color = "orange", Weight = 0.5, Name = "Bob o'Bob"},
-            new Marble() {Id = 6, Color = "yellow", Weight = 0.2, Name = "Bob Dad-Bob"},
-            new Marble() {Id = 7, Color = "green", Weight = 1.0, Name = "tom"},
-        };
-
-        Console.WriteLine("Original List:");
-        foreach (Marble marble in marbleList)
-        {
-            Console.WriteLine(marble);
-        }
-        Console.WriteLine();
-
-        Dictionary<string, int> colorLookup = new Dictionary<string, int>()
-        {
-            {"red", 1},
-            {"orange", 2},
-            {"yellow", 3},
-            {"green", 4},
-            {"blue", 5},
-            {"indigo", 6},
-            {"violet" , 7}
-        };
-
-        List<Marble> sortedMarbles = marbleList.OrderBy(m => colorLookup[m.Color]).ToList();
-
-        Console.WriteLine("Sorted List:");
-        foreach (Marble marble in sortedMarbles)
-        {
-            Console.WriteLine(marble);
-        }
-        Console.WriteLine();
-
+        String testString = "Bob O'Bob";
+        bool isPalindrome = StringHelper.IsPalindrome(testString);
+        Console.WriteLine("Input: " + testString + ", Palindrome: " + isPalindrome);
     }
     else if (command == "testsortandfilter")
     {
@@ -183,54 +66,7 @@ while (command != "exit")
         }
         Console.WriteLine();
 
-        List<Marble> filteredList = new List<Marble>();
-
-        foreach (Marble marble in marbleList)
-        {
-            // Copied this from test clean
-            String cleanString = marble.Name.ToLower(); // marble name cleaned
-            char[] testArray = cleanString.ToCharArray();
-            StringBuilder builder = new StringBuilder();
-
-            foreach (char testChar in testArray)
-            {
-                if (char.IsLetterOrDigit(testChar))
-                {
-                    builder.Append(testChar);
-                }
-            }
-            cleanString = builder.ToString();
-
-            // Copied from test palindrome
-            testArray = cleanString.ToCharArray();
-            Array.Reverse(testArray);
-            String reverseString = new String(testArray); // marble name reversed
-
-            bool isPalindrome = false;
-            if (cleanString == reverseString)
-            {
-                isPalindrome = true;
-            }
-
-            // Added to the filter test
-            if (marble.Weight >= 0.5 && isPalindrome == true)
-            {
-                filteredList.Add(marble);
-            }
-        }
-
-        Dictionary<string, int> colorLookup = new Dictionary<string, int>()
-        {
-            {"red", 1},
-            {"orange", 2},
-            {"yellow", 3},
-            {"green", 4},
-            {"blue", 5},
-            {"indigo", 6},
-            {"violet" , 7}
-        };
-
-        List<Marble> sortedMarbles = filteredList.OrderBy(m => colorLookup[m.Color]).ToList();
+        List<Marble> sortedMarbles = MarbleChallenge.SortAndFilter(marbleList);
 
         Console.WriteLine("Sorted and Filtered List:");
         foreach (Marble marble in sortedMarbles)
